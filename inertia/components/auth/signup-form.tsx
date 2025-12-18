@@ -7,6 +7,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field
 import { Input } from '~/components/ui/input'
 import { cn } from '~/lib/utils'
 import useError from '~/hooks/use-error'
+import { route } from '@izzyjs/route/client'
 
 export default function SignupForm({ className, ...props }: React.ComponentProps<'form'>) {
   const form = useForm({
@@ -18,7 +19,7 @@ export default function SignupForm({ className, ...props }: React.ComponentProps
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // form.post(route('auth.login').toString())
+    form.post(route('auth.signup').toString())
   }
 
   const errors = form.errors

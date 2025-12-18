@@ -1,12 +1,9 @@
-import { Kysely, PostgresDialect } from 'kysely'
-import { Pool } from 'pg'
+import { PrismaPg } from '@prisma/adapter-pg'
 
+import { PrismaClient } from '#prisma/client'
 import env from '#start/env'
 
-import type { DB } from '#types/db'
+const adapter = new PrismaPg({ connectionString: env.get('DATABASE_URL') })
+const prisma = new PrismaClient({ adapter })
 
-export const db = new Kysely<DB>({
-  dialect: new PostgresDialect({
-    pool: new Pool({ connectionString: env.get('DATABASE_URL') }),
-  }),
-})
+export default prisma

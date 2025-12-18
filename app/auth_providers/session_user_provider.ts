@@ -1,13 +1,13 @@
 import { symbols } from '@adonisjs/auth'
 import { SessionGuardUser, SessionUserProviderContract } from '@adonisjs/auth/types/session'
 
-import type { Users } from '#types/db'
-import { db } from '#services/db'
+import prisma from '#services/db'
+import { User } from '#prisma/client'
 
-export class SessionKyselyUserProvider implements SessionUserProviderContract<Users> {
-  declare [symbols.PROVIDER_REAL_USER]: Users
+export class SessionKyselyUserProvider implements SessionUserProviderContract<User> {
+  declare [symbols.PROVIDER_REAL_USER]: User
 
-  async createUserForGuard(user: Users): Promise<SessionGuardUser<Users>> {
+  async createUserForGuard(user: User): Promise<SessionGuardUser<User>> {
     return {
       getId() {
         return user.id
@@ -18,17 +18,16 @@ export class SessionKyselyUserProvider implements SessionUserProviderContract<Us
     }
   }
 
-  async findById(identifier: number): Promise<SessionGuardUser<Users> | null> {
-    const user = await db
-      .selectFrom('users')
-      .selectAll()
-      .where('id', '=', identifier)
-      .executeTakeFirst()
+  async findById(identifier: number): Promise<SessionGuardUser<User> | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: identifier,
+      },
+    })
     if (!user) {
       return null
     }
 
-    // @ts-ignore
     return this.createUserForGuard(user)
   }
 }
