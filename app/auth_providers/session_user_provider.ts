@@ -4,7 +4,7 @@ import { SessionGuardUser, SessionUserProviderContract } from '@adonisjs/auth/ty
 import prisma from '#services/db'
 import { User } from '#prisma/client'
 
-export class SessionKyselyUserProvider implements SessionUserProviderContract<User> {
+export class SessionPrismaUserProvider implements SessionUserProviderContract<User> {
   declare [symbols.PROVIDER_REAL_USER]: User
 
   async createUserForGuard(user: User): Promise<SessionGuardUser<User>> {
