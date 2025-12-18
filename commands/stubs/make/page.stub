@@ -1,0 +1,16 @@
+{{{
+  exports({
+    to:  app.makePath(filePath)
+  })
+}}}
+import { Head } from '@inertiajs/react'
+
+export default function {{pageName}}Page() {
+  return (
+    <>
+      <Head title="{{pageName}}" />
+      <div className="">{{pageName}} Page</div>
+    </>
+  )
+}
+
