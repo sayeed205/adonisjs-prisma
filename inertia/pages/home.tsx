@@ -1,8 +1,31 @@
-import { Head } from '@inertiajs/react'
-import { Box, Code2, Database, Github, Layers, Lock, ShieldCheck, Zap } from 'lucide-react'
+import { Head, router } from '@inertiajs/react'
+import {
+  Box,
+  Code2,
+  Database,
+  Github,
+  Layers,
+  Lock,
+  LogOutIcon,
+  ShieldCheck,
+  Zap,
+} from 'lucide-react'
+
 import { Particles } from '~/components/ui/particles'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
+import useUser from '~/hooks/use-user'
+import { route } from '@izzyjs/route/client'
 
 export default function Home() {
+  const user = useUser()!
   return (
     <>
       <Head title="AdonisJS - Starter Kit" />
@@ -22,17 +45,53 @@ export default function Home() {
               </div>
               <span>AdonisJS Starter</span>
             </div>
-            <nav className="flex items-center gap-6">
-              <a
-                href="https://github.com/sayeed205"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:inline-flex h-9 items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground shadow transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="h-8 w-8 cursor-pointer">
+                  <AvatarImage src="" alt={user.name} />
+                  <AvatarFallback className="rounded-lg">
+                    {user.name
+                      .split(' ')
+                      .slice(0, 2)
+                      .map((name) => name.charAt(0))
+                      .join('')}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                align="end"
+                sideOffset={4}
               >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-              </a>
-            </nav>
+                <DropdownMenuLabel className="p-0 font-normal">
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src="" alt={user.name} />
+                      <AvatarFallback className="rounded-lg">
+                        {user.name
+                          .split(' ')
+                          .slice(0, 2)
+                          .map((name) => name.charAt(0))
+                          .join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">{user.name}</span>
+                      <span className="truncate text-xs">{user.email}</span>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    router.post(route('auth.logout').toString())
+                  }}
+                >
+                  <LogOutIcon className="size-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 

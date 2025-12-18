@@ -11,7 +11,20 @@ const inertiaConfig = defineConfig({
    * Data that should be shared with all rendered pages
    */
   sharedData: {
-    // user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
+    user: (ctx) =>
+      ctx.inertia.always(() => {
+        const user = ctx.auth.user
+        if (user) {
+          const { id, name, email } = user
+          return {
+            id,
+            name,
+            email,
+          }
+        }
+      }),
+    flash: (ctx) => ctx.inertia.always(() => ctx.session?.flashMessages?.all()),
+    qs: (ctx) => ctx.inertia.always(() => ctx.request.qs()),
   },
 
   /**
@@ -26,5 +39,11 @@ const inertiaConfig = defineConfig({
 export default inertiaConfig
 
 declare module '@adonisjs/inertia/types' {
-  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {}
+  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {
+    user?: {
+      id: number
+      name: string
+      email: string
+    }
+  }
 }

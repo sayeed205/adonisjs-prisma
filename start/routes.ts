@@ -28,3 +28,4 @@ router
   })
   .as('auth')
   .use(middleware.guest())
+router.post('logout', [AuthController, 'logout']).use(middleware.auth()).as('auth.logout')
