@@ -11,7 +11,7 @@ import useError from '~/hooks/use-error'
 
 export default function LoginForm({ className, ...props }: React.ComponentProps<'form'>) {
   const form = useForm({
-    username: '',
+    email: '',
     password: '',
   })
 
@@ -33,19 +33,19 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
   return (
     <form className={cn('flex flex-col gap-6', className)} onSubmit={onSubmit} {...props}>
       <FieldGroup className="p-4">
-        <Field className="gap-2" data-invalid={errors.username}>
-          <FieldLabel htmlFor="username">Username</FieldLabel>
+        <Field className="gap-2" data-invalid={errors.email}>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
           <Input
-            aria-invalid={!!errors.username}
-            type="text"
+            aria-invalid={!!errors.email}
+            type="email"
             autoComplete="off"
-            id="username"
+            id="email"
             placeholder="johndoe"
-            value={form.data.username}
-            onChange={(e) => form.setData('username', e.target.value)}
+            value={form.data.email}
+            onChange={(e) => form.setData('email', e.target.value)}
           />
           <FieldDescription>Your 7-digit user ID provided during registration.</FieldDescription>
-          {errors.username && <FieldError errors={[{ message: errors.username }]} />}
+          {errors.email && <FieldError errors={[{ message: errors.email }]} />}
         </Field>
         <Field className="gap-2" data-invalid={errors.password}>
           <FieldLabel htmlFor="password">Password</FieldLabel>
