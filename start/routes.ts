@@ -25,6 +25,7 @@ router
     router.get('login', [AuthController, 'loginPage']).as('login.page')
 
     router.post('signup', [AuthController, 'signup']).as('signup')
+    router.post('login', [AuthController, 'login']).as('login')
   })
   .as('auth')
   .use(middleware.guest())

@@ -42,30 +42,25 @@ export default class AuthController {
     return response.redirect().toRoute('home')
   }
 
-  async login(ctx: HttpContext) {
-    const { request, response, session } = ctx
+  async login({ auth, request, response, session }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator)
 
-    try {
-      const user = await prisma.user.findUnique({ where: { email } })
-      if (!user) {
-        session.flash('errors.auth', 'Invalid Credentials!')
-        return response.redirect().back()
-      }
-      const validPassword = await hash.verify(user.password, password)
-      if (!validPassword) {
-        session.flash('errors.auth', 'Invalid Credentials!')
-        return response.redirect().back()
-      }
-      const next = request.qs().redirect as string
-      if (next) {
-        return response.redirect(next)
-      }
-      return response.redirect().toRoute('home')
-    } catch (error) {
-      session.flash('errors.auth', 'Invalid credentials')
-      return response.redirect().toRoute('auth.login.page')
+    const user = await prisma.user.findUnique({ where: { email } })
+    if (!user) {
+      session.flash('errors.auth', 'Invalid Credentials!')
+      return response.redirect().back()
     }
+    const validPassword = await hash.verify(user.password, password)
+    if (!validPassword) {
+      session.flash('errors.auth', 'Invalid Credentials!')
+      return response.redirect().back()
+    }
+    const next = request.qs().redirect as string
+    await auth.use('web').login(user)
+    if (next) {
+      return response.redirect(next)
+    }
+    return response.redirect().toRoute('home')
   }
 
   async logout({ auth, response, session }: HttpContext) {
