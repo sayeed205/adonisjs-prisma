@@ -5,7 +5,7 @@ import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp } from '@inertiajs/react'
 import { hydrateRoot } from 'react-dom/client'
 
-import '../css/app.css'
+import { ThemeProvider } from '~/components/theme-provider'
 
 const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
 
@@ -19,6 +19,11 @@ createInertiaApp({
   },
 
   setup({ el, App, props }) {
-    hydrateRoot(el, <App {...props} />)
+    hydrateRoot(
+      el,
+      <ThemeProvider defaultTheme="system" storageKey="theme">
+        <App {...props} />
+      </ThemeProvider>
+    )
   },
 }).then()
