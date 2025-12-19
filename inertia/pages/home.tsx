@@ -1,5 +1,15 @@
 import { Head, router } from '@inertiajs/react'
-import { Box, Code2, Database, Github, Layers, Lock, LogOutIcon, ShieldCheck, Zap, } from 'lucide-react'
+import {
+  Box,
+  Code2,
+  Database,
+  Github,
+  Layers,
+  Lock,
+  LogOutIcon,
+  ShieldCheck,
+  Zap,
+} from 'lucide-react'
 
 import { Particles } from '~/components/ui/particles'
 import {
