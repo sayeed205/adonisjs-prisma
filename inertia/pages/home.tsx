@@ -1,15 +1,5 @@
 import { Head, router } from '@inertiajs/react'
-import {
-  Box,
-  Code2,
-  Database,
-  Github,
-  Layers,
-  Lock,
-  LogOutIcon,
-  ShieldCheck,
-  Zap,
-} from 'lucide-react'
+import { Box, Code2, Database, Github, Layers, Lock, LogOutIcon, ShieldCheck, Zap, } from 'lucide-react'
 
 import { Particles } from '~/components/ui/particles'
 import {
@@ -23,6 +13,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import useUser from '~/hooks/use-user'
 import { route } from '@izzyjs/route/client'
+import { ThemeToggle } from '~/components/theme-toggle'
 
 export default function Home() {
   const user = useUser()!
@@ -45,53 +36,56 @@ export default function Home() {
               </div>
               <span>AdonisJS Starter</span>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="h-8 w-8 cursor-pointer">
-                  <AvatarImage src="" alt={user.name} />
-                  <AvatarFallback className="rounded-lg">
-                    {user.name
-                      .split(' ')
-                      .slice(0, 2)
-                      .map((name) => name.charAt(0))
-                      .join('')}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                align="end"
-                sideOffset={4}
-              >
-                <DropdownMenuLabel className="p-0 font-normal">
-                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src="" alt={user.name} />
-                      <AvatarFallback className="rounded-lg">
-                        {user.name
-                          .split(' ')
-                          .slice(0, 2)
-                          .map((name) => name.charAt(0))
-                          .join('')}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">{user.name}</span>
-                      <span className="truncate text-xs">{user.email}</span>
-                    </div>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => {
-                    router.post(route('auth.logout').toString())
-                  }}
+            <div className="flex gap-2">
+              <ThemeToggle />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="h-8 w-8 cursor-pointer">
+                    <AvatarImage src="" alt={user.name} />
+                    <AvatarFallback className="rounded-lg">
+                      {user.name
+                        .split(' ')
+                        .slice(0, 2)
+                        .map((name) => name.charAt(0))
+                        .join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                  align="end"
+                  sideOffset={4}
                 >
-                  <LogOutIcon className="size-4" />
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <DropdownMenuLabel className="p-0 font-normal">
+                    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                      <Avatar className="h-8 w-8 rounded-lg">
+                        <AvatarImage src="" alt={user.name} />
+                        <AvatarFallback className="rounded-lg">
+                          {user.name
+                            .split(' ')
+                            .slice(0, 2)
+                            .map((name) => name.charAt(0))
+                            .join('')}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-semibold">{user.name}</span>
+                        <span className="truncate text-xs">{user.email}</span>
+                      </div>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      router.post(route('auth.logout').toString())
+                    }}
+                  >
+                    <LogOutIcon className="size-4" />
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </header>
 
@@ -115,7 +109,7 @@ export default function Home() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
                 <a
-                  href="https://github.com/sayeed205"
+                  href="https://github.com/sayeed205/adonisjs-prisma"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:scale-105"
@@ -144,7 +138,7 @@ export default function Home() {
                     key={index}
                     className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/50 p-8 backdrop-blur-sm transition-all hover:shadow-xl hover:-translate-y-1 hover:border-primary/20"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
                     <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                       {feature.icon}
                     </div>
